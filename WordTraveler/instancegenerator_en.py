@@ -10,12 +10,8 @@ import os
 import random
 import logging
 from matplotlib.pyplot import title
-import openai
-import requests
-import spacy
 import argparse
 import string
-import re
 
 from clemcore.clemgame import GameInstanceGenerator
 
@@ -48,7 +44,7 @@ class WordTravelerInstanceGenerator(GameInstanceGenerator):
         super().__init__(os.path.dirname(__file__))
 
 
-    def on_generate(self):
+    def on_generate(self, *args, **kwargs):
         """Generate game instances for the Word Traveler game."""
         # Set the filename for the generated instances
         self.filename = f"instances_{VERSION}_{LANGUAGE}.json"
