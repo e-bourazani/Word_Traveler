@@ -685,7 +685,7 @@ class WordTravelerScorer(GameScorer):
             self.log_episode_score("Speed", speed)
             self.log_episode_score("Rank", rank_avg)
         elif interactions[METRIC_LOSE]:
-            self.log_episode_score(BENCH_SCORE, -1)
+            self.log_episode_score(BENCH_SCORE, 0)
             self.log_episode_score("Speed", 0)
             self.log_episode_score("Rank", rank_avg)
         elif interactions[METRIC_ABORTED]:
