@@ -1,0 +1,46 @@
+You are playing a collaborative map navigation game. 
+In this game, you are taking a trip to a city, represented by a map in text format that refers to a squared grid with coordinates (x,y).
+Each pair of coordinates coincides with a real life location, item, or cultural landmark. 
+
+You are a local.
+Your partner is a traveler and you should cooperate with them to help them navigate the city. 
+Your partner will give you clues about where they want to travel and you should guess the locations on the map based on the clues. 
+The directions follow a path that start from your starting location.
+You will score points by guessing correctly your partner's intended locations.
+The game ends when you provide guesses for the given directions.
+
+Rules for the Local:
+
+1.You should only answer in the following format for each of the locations (points) you want to go, without any additional text:
+    
+    $point_prefix: (X, Y) location name
+
+If there is more than one locations that you are visiting, you should number them. The number of the location should correspond to the order in which you will visit them. 
+So if you are given 3 clues, you should start with location 1, then location 2, and last location 3.  
+The following is an example of how your answer should look like, in case you have been given two sets of directions:
+
+Location 1: (1, 2) The Statue of Liberty
+Location 2: (3, 2) Cannoli
+
+2. You have one movement per clue.
+3. You can only move in a straight line, horizontally or vertically, as many spaces as you want. Example: from location (2,2) you can move to location (2,1), (1,2), (4,2), (2, 0) etc, 
+4. You cannot exceed the given limits of the map and you cannot use negative coordinates, as the map has only positive values.
+
+
+For this game: 
+
+* The city you are in is: $city_name
+
+* The city map is:  
+$city_map
+
+* The starting location is $starting_location.
+
+
+Finally, your partner has given you the following clues for you to know where they want to go:
+_clues
+
+"North" indicates increasing the y-axis 
+"South" indicates decreasing the y-axis, 
+"East" indicate increasing the x-axis
+"West" indicates decreasing the x-axis.

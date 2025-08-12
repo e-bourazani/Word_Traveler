@@ -1,0 +1,17 @@
+{
+  "parse_error": "Please, check the format of your answer. Reminder: your response should not contain any additional text apart from the clues in the appropriate format.",
+  "location_error" : "One of your locations was not found in the map. Remember to only used the locations indicated in the city map. Reminder: your response should not contain any additional text apart from the clues in the appropriate format.",
+  "coordinates_error": "The coordinates of one of the locations do not match the rules. Remember that the coordinates of the locations you want to move to must be connected to the previous location you visited, either along the x or y axis. Reminder: your response should not contain any additional text apart from the clues in the appropriate format.",
+  "cardinal_direction_error": "The cardinal direction used was not valid. Remember to use either North, South, East, or West. Reminder: your response should not contain any additional text apart from the clues in the appropriate format.",
+  "clue_with_no_adjectives": "One of your clues did not contain any adjectives. Remember that each arrow needs to have at least one adjective describing the location. Reminder: your response should not contain any additional text apart from the clues in the appropriate format.",
+  "not_negation_used": "One of the clues does not follow the rules. Remember that you can only use the adjectives given in the list or their negated version, like 'funny' and 'not funny'. But 'Very funny' would not be allowed. Reminder: your response should not contain any additional text apart from the clues in the appropriate format.",
+  "adjective_not_found": "One of the adjectives used as a clue is not contained in the list of adjectives allowed. Reminder: your response should not contain any additional text apart from the clues in the appropriate format.",
+  "adjective_used_twice": "One of the adjectives was used more than once. Remember that you can only use each adjective once. Reminder: your response should not contain any additional text apart from the clues in the appropriate format.",
+  "coordinates_outside_map": "The coordinates given are outside the city limits. Try to remember the range of numbers the city map uses. Reminder: your response should not contain any additional text apart from the clues in the appropriate format.",
+  "parse_error_direction": "Response does not contain direction in the expected format. Reminder: your response should not contain any additional text apart from the clues in the appropriate format.",
+  "parse_error_clues": "Response does not contain clues in the expected format. Reminder: your response should not contain any additional text apart from the clues in the appropriate format.",
+  "parse_error_destination": "Response does not contain intended destination in the expected format. Reminder: your response should not contain any additional text apart from the clues in the appropriate format." ,
+  "parse_error_movements_more": "Too many directions-clues where given. Reminder: your response should not contain any additional text apart from the clues in the appropriate format.",
+  "parse_error_movements_less": "Too few directions-clues where given. Reminder: your response should not contain any additional text apart from the clues in the appropriate format.",
+  "parse_error_points" : "Response does not contain locations in the expected format. Reminder: your response should not contain any additional text apart from the clues in the appropriate format."
+}

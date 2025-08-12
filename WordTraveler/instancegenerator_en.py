@@ -123,7 +123,7 @@ class WordTravelerInstanceGenerator(GameInstanceGenerator):
                 
 
                 """ word lists """
-                adjectives = self.load_file('resources/original_game_wordlist.txt').strip('\n').split('\n')
+                adjectives = self.load_file('resources/wordlist.txt').strip('\n').split('\n')
                 word_list = random.sample(adjectives, N_WORDS) # default word list for the game from which we will sample 10 words
 
 

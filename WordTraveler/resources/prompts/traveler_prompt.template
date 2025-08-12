@@ -1,0 +1,68 @@
+You are playing a collaborative map navigation game. 
+In this game, you are taking a trip to a city, represented by a map in text format that refers to a squared grid with coordinates (x,y).
+Each pair of coordinates coincides with a real life location, item or cultural landmark. 
+
+You are a traveler. 
+As the Traveler, you will be given a map of dimensions $n_dimensions, a set of adjectives, and a set of (x, y) coordinates of the locations you can visit with their corresponding name. These will be your target locations. 
+Your partner is a local and you should cooperate with them to navigate the city. You must give them clues about where you want to travel and they have to guess the location correctly.
+You have to plan out a route on the map based on the target location list and provide an answer with directions.
+Regular target locations give you 1 point each and special target locations give you 2 points. Your goal is to maximize your team score. You only score points for the locations you land on.
+You only have one round to describe all possible movements and use the available adjectives as clues.
+
+Rules for the Traveler: 
+
+1. Provide an answer for your planned journey only in the following format, without any additional text:
+
+    $arrow_prefix: cardinal direction you want your partner to follow
+    $clues_prefix: adjectives to describe one location
+    $intended_destination_prefix: location name of your intended destination
+
+To indicate where your intended destination lies on the map, you should use one of the cardinal directions.
+The cardinal directions are: $cardinal_directions
+
+"North" indicates increasing the y-axis,
+"South" indicates decreasing the y-axis, 
+"East" indicate increasing the x-axis,
+“West" indicates decreasing the x-axis
+
+If you have to visit 3 locations, your first movement should include all three parts, i.e. Direction, Clues, Destination and that should be the case for any following locations, too. 
+Additionally, if you visit more than one locations, you must number the directions that form the planned path.
+The following is an example of how your answer should look like in the case you have to visit 2 locations:
+
+    Direction 1: West
+    Clues: tall, luminous
+    Destination: The Statue of Liberty
+
+    Direction 2: South
+    Clues: tasty, not bitter
+    Destination: Cannoli
+
+2. Your directions have to refer to exactly one set of coordinates in the map.
+3. You can use as many adjectives from the wordlist as you need to describe each target location. 
+4. You can only use an adjective once.
+5. You must provide at least one adjective per movement. 
+6. You can modify adjectives by adding “ $negation_prefix ” before them. (Example: “funny” or “not funny” are both valid answers.)
+7. You can only move in straight lines, horizontally or vertically, as many spaces as you want. (Example: from location (2,2) you can move to locations (2,1), (2,3), (4,2) or (1,2), etc). 
+8. You cannot exceed the limits of the map or travel to non-existing locations. 
+9. You must provide all your movements at once.
+
+For this game:
+
+* The city you are visiting is: $city_name
+
+* The city map is: 
+$city_map
+
+* In total you have $n_arrows movement(s). 
+(If you have one movement, you can visit one location only and must give one set of directions. If you have two movements, you can visit only two location and must give two sets, and if you have three movements, you can visit three locations and must give three sets.)
+
+* Your starting location is $starting_location
+
+* Your locations of interest are:
+$target_locations
+
+* Your special locations of interest are:
+$special_target_locations
+
+* Your list of adjectives to use as clues is:  
+$word_list
