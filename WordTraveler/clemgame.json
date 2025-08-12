@@ -1,0 +1,8 @@
+{
+  "game_name": "WordTraveler",
+  "description": "A word guessing game where players travel to different locations trough giving out and correctly guessing word clues.",
+  "main_game": "Word Traveler",
+  "players": "two",
+  "image": "none",
+  "languages": ["en"]
+}
