@@ -17,18 +17,18 @@ from clemcore.clemgame import GameInstanceGenerator
 GAME_NAME = "word_traveler"
 N_INSTANCES = 10 # number of instances per experiment 
 N_WORDS = 10
-ARROW_PREFIX = "Direction"
-CLUES_PREFIX = "Clues"
-INTENDED_DESTINATION_PREFIX = "Destination"
-CARDINAL_DIRECTIONS = "North", "South", "East", "West"
-NEGATION_PREFIX = "not"
-POINT_PREFIX = "Location"
+ARROW_PREFIX = "Dirección"
+CLUES_PREFIX = "Pistas"
+INTENDED_DESTINATION_PREFIX = "Destino"
+CARDINAL_DIRECTIONS = "Norte", "Sur", "Este", "Oeste"
+NEGATION_PREFIX = "no"
+POINT_PREFIX = "Locación"
 START_LOCATION = 1
 N_TARGET_LOCATIONS = 6
 N_TARGET_SPECIAL_LOCATIONS = 3
-N_DIMENSIONS = "5x5"  # number of dimensions of the city map
+N_DIMENSIONS = "5x5"  # number of dimensions in the city map
 DIMENSION = 5
-LANGUAGE = "en"  # language of the game, english
+LANGUAGE = "es"  # language of the game, english
 VERSION = "v1.0"  # version of the game
 
 logger = logging.getLogger(__name__) # Set up logging
@@ -53,7 +53,7 @@ class WordTravelerInstanceGenerator(GameInstanceGenerator):
         difficulty_type = ['strict','nonstrict']
         for difficulty in difficulty_type:
             for x in numbers:
-                experiment_names.append(f"{x}_clues_{difficulty}")
+                experiment_names.append(f"{x}_clues_{difficulty}_{LANGUAGE}")
         # for now we will try only with one word list, like in the original game
         experiment = {name: self.add_experiment(name) for name in experiment_names}
     
@@ -65,7 +65,7 @@ class WordTravelerInstanceGenerator(GameInstanceGenerator):
                 """ city """
                 # load city names and maps, which will be a dictionary with city names as keys and maps as values that will be a nested dictionary
                 # load the cities from json file
-                with open('resources/maps_5x5.json', 'r', encoding="utf-8") as f:
+                with open('resources_es/maps_5x5_es.json', 'r', encoding="utf-8") as f:
                     cities = json.load(f)
                 # convert string keys to tuple keys because the maps are stored as tuples in the json file 
                 # and when we load them they are converted to strings
@@ -100,9 +100,9 @@ class WordTravelerInstanceGenerator(GameInstanceGenerator):
 
                 """ number of arrows """
                 arrow_dict = {
-                    '3': ['three_clues_strict', 'three_clues_nonstrict'],
-                    '2': ['two_clues_strict', 'two_clues_nonstrict'],
-                    '1': ['one_clues_strict', 'one_clues_nonstrict']
+                    '3': ['three_clues_strict_es', 'three_clues_nonstrict_es'],
+                    '2': ['two_clues_strict_es', 'two_clues_nonstrict_es'],
+                    '1': ['one_clues_strict_es', 'one_clues_nonstrict_es']
                 }
                 # determine the number of arrows based on the experiment name
                 n_arrows = next((k for k, v in arrow_dict.items() if exp_name in v), '0')
@@ -110,17 +110,15 @@ class WordTravelerInstanceGenerator(GameInstanceGenerator):
                 """ difficulty_type """
                 
                 difficulty_dic = {
-                    'nonstrict':['three_clues_nonstrict', 'two_clues_nonstrict', 'one_clues_nonstrict'],
-                    'strict': ['three_clues_strict', 'two_clues_strict', 'one_clues_strict'],
+                    'nonstrict':['three_clues_nonstrict_es', 'two_clues_nonstrict_es', 'one_clues_nonstrict_es'],
+                    'strict': ['three_clues_strict_es', 'two_clues_strict_es', 'one_clues_strict_es'],
                 }
                 # determine the difficulty type based on the experiment name
                 difficulty = next((k for k, v in difficulty_dic.items() if exp_name in v), '0')
                 
-
                 """ word lists """
-                adjectives = self.load_file('resources/wordlist.txt').strip('\n').split('\n')
-                word_list = random.sample(adjectives, N_WORDS) # default word list for the game from which we will sample 10 words
-
+                adjectives = self.load_file('resources_es/wordlist_es.txt').strip('\n').split('\n')
+                word_list = random.sample(adjectives, N_WORDS) # default word list for the game from whcih we will sample 10 words
 
                 '''populate the instance with its parameters'''
                 instance = self.add_game_instance(experiment, game_id)
@@ -139,9 +137,9 @@ class WordTravelerInstanceGenerator(GameInstanceGenerator):
                 instance['negation_prefix'] = NEGATION_PREFIX
                 instance['point_prefix'] = POINT_PREFIX
                 instance['difficulty'] = difficulty  
-                instance['prompt_player_a'] = self.create_prompt(self.load_template('resources/prompts/traveler_prompt.template'), N_DIMENSIONS, ARROW_PREFIX, CLUES_PREFIX, INTENDED_DESTINATION_PREFIX, CARDINAL_DIRECTIONS, NEGATION_PREFIX, None, city_name, string_city_map, n_arrows, string_starting_location, string_target_location, string_special_target_locations, word_list)
-                instance['prompt_player_b'] = self.create_prompt(self.load_template('resources/prompts/local_prompt.template'), None, None, None, None, None, None,POINT_PREFIX, city_name, string_city_map, None, string_starting_location, None, None,None)
-                errors_file = os.path.join('resources', 'errors.json')
+                instance['prompt_player_a'] = self.create_prompt(self.load_template('resources_es/prompts/traveler_prompt_es.template'), N_DIMENSIONS, ARROW_PREFIX, CLUES_PREFIX, INTENDED_DESTINATION_PREFIX, CARDINAL_DIRECTIONS, NEGATION_PREFIX, None, city_name, string_city_map, n_arrows, string_starting_location, string_target_location, string_special_target_locations, word_list)
+                instance['prompt_player_b'] = self.create_prompt(self.load_template('resources_es/prompts/local_prompt_es.template'), None, None, None, None, None, None,POINT_PREFIX, city_name, string_city_map, None, string_starting_location, None, None,None)
+                errors_file = os.path.join('resources_es', 'errors_es.json')
                 with open(errors_file, 'r', encoding='utf-8') as file:
                     instance['error_messages'] = json.load(file)                
 

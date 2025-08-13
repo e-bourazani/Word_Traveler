@@ -9,7 +9,6 @@ import json
 import os
 import random
 import logging
-from matplotlib.pyplot import title
 import argparse
 import string
 
