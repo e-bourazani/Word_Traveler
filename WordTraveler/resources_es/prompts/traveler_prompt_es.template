@@ -1,0 +1,68 @@
+Vamos a jugar un juego colaborativo de navegación por un mapa. 
+En este juego, estás viajando por una ciudad, representada por un mapa en formato de texto que hace referencia a una cuadrícula con coordenadas (x, y).
+Cada par de coordenadas coincide con una ubicación, un elemento o un lugar de interés cultural de la vida real. 
+
+Eres un viajero. 
+Como viajero, se te proporcionará un mapa de dimensiones $n_dimensions, un conjunto de adjetivos y un conjunto de coordenadas (x, y) de las ubicaciones que quieres visitar con su nombre. Estas serán tus locaciones objetivo. 
+Tu compañero es un lugareño y debes cooperar con él para navegar por la ciudad. Debes darle pistas sobre dónde quieres viajar y él tiene que adivinar la ubicación correctamente.
+Tienes que planificar una ruta en el mapa basándote en la lista de locaciones objetivo y proporcionar una respuesta con indicaciones.
+Las locaciones objetivo normales te dan 1 punto cada una y las locaciones objetivo especiales te dan 2 puntos. Tu objetivo es maximizar la puntuación de tu equipo. Solo obtienes puntos por las locaciones en las que aterrizas.
+Solo tienes una ronda para describir todos los movimientos posibles y utilizar los adjetivos disponibles como pistas.
+
+Reglas para el viajero:
+
+1. Proporciona una respuesta para tu viaje planificado solo en el siguiente formato, sin texto adicional:
+
+$arrow_prefix: dirección cardinal que quieres que siga tu compañero
+$clues_prefix: adjetivos para describir una locación
+$intended_destination_prefix: nombre de la locación de tu destino previsto
+
+Para indicar dónde se encuentra tu destino previsto en el mapa, debes utilizar uno de los puntos cardinales.
+Los puntos cardinales son: $cardinal_directions
+
+«Norte» indica un aumento del eje y,
+«Sur» indica una disminución del eje y, 
+«Este» indica un aumento del eje x,
+«Oeste» indica una disminución del eje x
+
+Si tienes que visitar tres locaciones, tu primer movimiento debe incluir las tres partes, es decir, dirección, pistas y destino, y lo mismo debe aplicarse a las ubicaciones siguientes. 
+Además, si visitas más de una locación, debes numerar las direcciones que forman la ruta planificada.
+A continuación se muestra un ejemplo de cómo debería ser tu respuesta en el caso de que tengas que visitar dos locaciones:
+
+    Dirección 1: Oeste
+    Pistas: alto, luminoso
+    Destino: La Estatua de la Libertad
+
+    Dirección 2: Sur
+    Pistas: sabroso, no amargo
+    Destino: Cannoli
+
+2. Tus direcciones deben referirse a un único conjunto de coordenadas en el mapa.
+3. Puedes utilizar tantos adjetivos de la lista de palabras como necesites para describir cada ubicación objetivo. 
+4. Solo puedes utilizar cada adjetivo una vez.
+5. Debes proporcionar al menos un adjetivo por movimiento. 
+6. Puedes modificar los adjetivos añadiendo «$negation_prefix» delante de ellos. (Ejemplo: «divertido» o «no divertido» son respuestas válidas).
+7. Solo puedes moverte en línea recta, horizontal o verticalmente, tantos espacios como quieras. (Ejemplo: desde la ubicación (2,2) puedes moverte a las ubicaciones (2,1), (2,3), (4,2) o (1,2), etc.). 
+8. No puedes sobrepasar los límites del mapa ni viajar a ubicaciones que no existen. 
+9. Debes indicar todos tus movimientos en una sola respuesta.
+
+Para este juego:
+
+* La ciudad que estás visitando es: $city_name
+
+* El mapa de la ciudad es: 
+$city_map
+
+* En total, tienes $n_arrows movimientos. 
+(Si tienes un movimiento, tienes que visitar una única ubicación y este movimiento tiene que incluir todos los elementos necesarios. Si tienes dos movimientos, tienes que visitar dos ubicaciones y cada movimiento incluirá todos los elementos necesarios y si tienes tres movimientos, tienes que visitar tres ubicaciones y cada movimiento incluirá todos los elementos necesarios).
+
+* Tu ubicación de inicio es $starting_location
+
+* Tus ubicaciones de interés son:
+$target_locations
+
+* Tus ubicaciones especiales de interés son:
+$special_target_locations
+
+* Tu lista de adjetivos para usar como pistas es:  
+$word_list

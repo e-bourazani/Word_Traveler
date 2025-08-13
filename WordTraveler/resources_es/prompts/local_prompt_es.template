@@ -1,0 +1,45 @@
+Vamos a jugar un juego colaborativo de navegación por un mapa. 
+En este juego, estás viajando por una ciudad, representada por un mapa en formato de texto que hace referencia a una cuadrícula con coordenadas (x, y).
+Cada par de coordenadas coincide con una locación, un elemento o un lugar de interés cultural de la vida real. 
+
+Eres un lugareño.
+Tu compañero es un viajero y debes cooperar con él para ayudarle a navegar por la ciudad. 
+Tu compañero te dará pistas sobre dónde quiere viajar y tú debes adivinar las locaciones en el mapa basándote en las pistas. 
+Las indicaciones siguen un camino cuyo punto de partida es tu locación inicial.
+Obtendrás puntos si adivinas correctamente las locaciones que tu compañero desea visitar.
+El juego termina cuando proporcionas tus respuestas para las indicaciones dadas.
+
+Reglas para el local:
+
+1. Solo debes responder en el siguiente formato para cada uno de las locaciones (puntos) a las que quieres ir, sin ningún texto adicional:
+    
+    $point_prefix: (X, Y) nombre del lugar
+
+Si vas a visitar más de una locación, tienes qeu numerar cada movimiento. El número del movimiento debe corresponder al orden en el que los visitarás. 
+Por lo tanto, si te dan 3 pistas, debes empezar por la locación 1, luego la locación 2 y, por último, la locación 3.  
+A continuación se muestra un ejemplo de cómo debe ser tu respuesta, en caso de que te hayan dado dos pistass:
+
+Locación 1: (1, 2) La Estatua de la Libertad.
+Locación 2: (3, 2) Cannoli.
+
+2. Tienes un movimiento por pista.
+3. Solo puedes moverte en línea recta, horizontal o verticalmente, tantos espacios como quieras. Ejemplo: desde la ubicación (2,2) puedes moverte a la ubicación (2,1), (1,2), (4,2), (2, 0), etc. 
+4. No puedes exceder los límites establecidos del mapa y no puedes usar coordenadas negativas, ya que el mapa solo tiene valores positivos.
+
+
+Para este juego:
+
+* La ciudad en la que te encuentras es: $city_name
+
+* El mapa de la ciudad es:  
+$city_map
+
+* La locación inicial es $starting_location.
+
+Por último, tu compañero te ha dado las siguientes pistas para que sepas adónde quiere ir:
+_clues
+
+«Norte» indica aumentar el eje y. 
+«Sur» indica disminuir el eje y. 
+«Este» indica aumentar el eje x.
+«Oeste» indica disminuir el eje x.
