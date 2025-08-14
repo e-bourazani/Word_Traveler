@@ -12,22 +12,24 @@ This version adapts the board game Word Traveler into the _clembench_ framework 
 ## The game
 
 ### Special Terms
-**Traveler**: clue giver.
-**Local**: clue guesser.
-**Direction**: referring to cardinal directions (North, South, East, West).
-**Clues**: word clues that are adjectives. According to the clue giver, these adjectives are related to the intended destination.
-**Destination**: the intended destination the clue giver is giving clues for.
-**Set of directions**: one set of directions consists of one (cardinal) direction, (word) clues and one (intended) destination.
-**Location**: the guess provided by the guesser, based on the set of directions formed by the clue giver.
-**Starting location**: the location on the map that will be the starting point of navigation for that round.
-**Target locations**: a set of locations on the map that if visited successfully, grant 1 point to the team.
-**Special target locations**: a set of locations on the map that if visited successfully, grant 2 points to the team.
+- **Traveler**: clue giver.
+- **Local**: clue guesser.
+- **Direction**: referring to cardinal directions (North, South, East, West).
+- **Clues**: word clues that are adjectives. According to the clue giver, these adjectives are related to the intended destination.
+- **Destination**: the intended destination the clue giver is giving clues for.
+- **Set of directions**: one set of directions consists of one (cardinal) direction, (word) clues and one (intended) destination.
+- **Location**: the guess provided by the guesser, based on the set of directions formed by the clue giver.
+- **Starting location**: the location on the map that will be the starting point of navigation for that round.
+- **Target locations**: a set of locations on the map that if visited successfully, grant 1 point to the team.
+- **Special target locations**: a set of locations on the map that if visited successfully, grant 2 points to the team.
 
 ### Game Description
 In this game, the players are in a city and one of them (Traveler) wants to explore the city and describes which locations they want to visit, while the other (Local) must guess which locations would fit the descriptions. 
+
 At the beginning of the game, each player is assigned a distinct role, either 'Traveler' or 'Local'. 
 The **Traveler** receives a text-based city map with locations marked by (x, y) coordinates, a list of target and special target locations, and a set of 10 adjectives to use as clues. The Traveler's mission is to give clear directions that guide the Local to the intended destinations.
 The **Local** has the same city map and receives the Traveler’s clues. Using these, they must identify which locations the Traveler wants to visit.
+
 In each game, the number of locations to visit is predetermined for each game. A location is considered successfully visited when the Local correctly guesses it based on the Traveler’s directions. The team earns points for each correct guess and successfully visited location.
 
 ## Resources
