@@ -4,10 +4,21 @@
 **Implemented by:** Evelina Bourazani & Juan Danza  
 **Inspired by:** _Word Traveler_ by Thomas Dagenais-Lespérance (Office Dog, 2024)
 
+**The implementation of this game was done within the scope of Clembench for LLM benchmarking purporses. The purpose of the game is to test and evaluate LLMS' abilities through making them play the game.**
+
 **Word Traveler** is a cooperative two-player word-guessing and map-navigation game. One player is the **Traveler**, giving clues using a limited set of adjectives to indicate target locations on a city map. The other is the **Local**, interpreting the clues to identify those locations.  
 Correct guesses earn points. Variations change the number of targets (1–3) and strictness mode (strict vs non-strict).
 
 This version adapts the board game Word Traveler into the _clembench_ framework with text-based maps, command-line interaction, and multi-language support.  The implementation does not fully follow the structure of the original board game, but is rather inspired by it.
+
+## Clembench
+
+Clembench is a framework for the systematic evaluation of chat-optimized Language Models as Conversational Agents.
+
+The core framework code used to run the game is Clemcore. It is recommended to install Clemcore in its own separate Python3.10 virtual environment. The packaged library can be installed using:
+```
+pip install clemcore
+```
 
 ## The game
 
