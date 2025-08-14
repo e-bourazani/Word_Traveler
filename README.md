@@ -1,328 +1,111 @@
-# Template for creating new `clemgames'
 
-This repository provides example code for starting to develop new games for the `clemcore' environment, as used in the `clembench' project.
+# Word Traveler
 
-[documentation to be further adapted]
+**Implemented by:** Evelina Bourazani & Juan Danza  
+**Inspired by:** _Word Traveler_ by Thomas Dagenais-Lespérance (Office Dog, 2024)
 
-- clemcore (can be installed via `pip`, access to this code is normally not needed for game development): <https://github.com/clembench/clemcore>
-- clembench (more examples of games, not all of which however are making use of the newest features, which is why it is better to start with the code in the present repository): <https://github.com/clembench/clembench>
+**Word Traveler** is a cooperative two-player word-guessing and map-navigation game. One player is the **Traveler**, giving clues using a limited set of adjectives to indicate target locations on a city map. The other is the **Local**, interpreting the clues to identify those locations.  
+Correct guesses earn points. Variations change the number of targets (1–3) and strictness mode (strict vs non-strict).
 
+This version adapts the board game Word Traveler into the _clembench_ framework with text-based maps, command-line interaction, and multi-language support.  The implementation does not fully follow the structure of the original board game, but is rather inspired by it.
 
-### Evaluation Results
+## The game
 
-On the [main project website](https://clembench.github.io) , under [leaderboard](https://clembench.github.io/leaderboard.html).
+### Special Terms
+**Traveler**: clue giver.
+**Local**: clue guesser.
+**Direction**: referring to cardinal directions (North, South, East, West).
+**Clues**: word clues that are adjectives. According to the clue giver, these adjectives are related to the intended destination.
+**Destination**: the intended destination the clue giver is giving clues for.
+**Set of directions**: one set of directions consists of one (cardinal) direction, (word) clues and one (intended) destination.
+**Location**: the guess provided by the guesser, based on the set of directions formed by the clue giver.
+**Starting location**: the location on the map that will be the starting point of navigation for that round.
+**Target locations**: a set of locations on the map that if visited successfully, grant 1 point to the team.
+**Special target locations**: a set of locations on the map that if visited successfully, grant 2 points to the team.
 
-# How to Prototype Games
+### Game Description
+In this game, the players are in a city and one of them (Traveler) wants to explore the city and describes which locations they want to visit, while the other (Local) must guess which locations would fit the descriptions. 
+At the beginning of the game, each player is assigned a distinct role, either 'Traveler' or 'Local'. 
+The **Traveler** receives a text-based city map with locations marked by (x, y) coordinates, a list of target and special target locations, and a set of 10 adjectives to use as clues. The Traveler's mission is to give clear directions that guide the Local to the intended destinations.
+The **Local** has the same city map and receives the Traveler’s clues. Using these, they must identify which locations the Traveler wants to visit.
+In each game, the number of locations to visit is predetermined for each game. A location is considered successfully visited when the Local correctly guesses it based on the Traveler’s directions. The team earns points for each correct guess and successfully visited location.
 
-We have linked here the documentation on how to prototype games, needed basic knowledge and sample code under these notebooks:
+## Resources
 
-[How to make a clemgame](https://github.com/clp-research/clemcore/blob/main/docs/howto_make_a_clemgame.ipynb)
+Each language has its own folder containing:
+- **Prompts** – Player instructions, one for each player.
+- **Errors** – Feedback messages and reprompting, only for non-strict mode.
+- **Maps** – City grids (5×5). There are currently 16 city maps. Each map includes real or made-up landmarks and items to represent the 'locations'.
+- **Word lists** – 160 adjectives, based on the original board game word list.
 
-[How to prototype games](https://github.com/clp-research/clemcore/blob/main/docs/howto_prototype_games.ipynb)
+## Experiments
 
+There are six different experiments in total, variating with different number of clues to be given and level of strictness.
 
+**NUMBER OF LOCATIONS**: There are three different experiments with variating number of locations the must visit. In each experiment respectively, the players must visit 1, 2 or 3 locations at once.
 
+**STRICTNESS**: There is strict and non-strict version. In strict version, the player only has one chance to send the clues, while in non-strict version, in case there is a mistake in the format of the answer, then feedback is provided to the player and they can try again, up to three times.
 
-# Using the clemcore CLI
+The above experiments are combined and create a total of 6 final experiments, with all three location experiments provided in both strict and non-strict mode.
 
-Create a separate virtual environment in Python (3.10, 3.11, 3.12) and activate it.
+## Languages
 
-```
-(myclem) python3 -m venv venv
+Currently supported languages:
+- English
+- Spanish
+- Greek
 
-(myclem) source venv/bin/activate
-```
+# RUN
 
-Then install `clemcore`:
-```
-(myclem) pip install clemcore
-``` 
+## Instance Generation
 
-To use local GPUs (via `transformers` or `vllm` libraries etc.) install the following libraries:
-```
-(myclem) pip install clemcore[huggingface] # dependencies for the local hf backend
-(myclem) pip install clemcore[vllm]        # dependencies for the local vllm backend
-(myclem) pip install clemcore[slurk]       # dependencies for the slurk backend 
-```
+One generation file per language, plus a special human-player mode.  
 
-After the installation you will have access to the `clem` CLI tool. The main functions are:
+To generate instances, run:
 
-```
-(myclem) clem list games               # list the games available for a run
-(myclem) clem list backends            # list the backends available for a run
-(myclem) clem list models              # list the models available for a run
-(myclem) clem run -g <game> -m <model> # runs the game benchmark; also transcribes and scores
-(myclem) clem transcribe               # translates interactions into html files
-(myclem) clem score                    # computes individual performance measures
-(myclem) clem eval                     # computes overall performances measures; requires scores
-```
-
-Note that `clem` operates relative to the current working directory, that is, the directory it is called from.
-This directory is what we call the workspace.
-A workspace may look like this.
-
-```
-(optional) key.json
-(optional) game_registry.json 
-(optional) model_registry.json  
-(optional) custom_api.py 
-clembench/
+```bash
+python3 word_traveler/instancegenerator_en.py
 ```
 
-The files have the following functions:
-- **key.json**: contains the secrets for the remote api calls; if this file does not exist, then `clem` looks into `~/.clemcore/`
-- **game_registry.json**: allows to make additional game specifications useable for the runs. The game specifications must at least contain the `game_name`, `game_path` and `players` attribute. We provide the template file.
-- **model_registry.json**: allows to add additional model specifications. This is specifically useful to run with models that have not been packaged yet. In addition, it allows to point model specification to custom backend names.
-- **custom_api.py**: `clem` automatically discovers additional _api files placed into the cwd, so that users of the framework can run their own backends with the games.
-- **clembench/**: contains the game directories (with the game code) available for the benchmark runs
+(Change filename for other languages or modes.)
+## Running the game
+To run instances, use the command 'clem run' and specify the game name under the -g flag. Additionally, the -m flag specifies the model(s). If there is one model under it, then it plays against itself. To make a model play against another model, simple add a second model name. When the second model name is 'human', then a human can play against a model, while when both model names are 'human', then two humans can play against eachother. The positon of the model name as first or second indicates the role the player will have in the game. For example, if a human wants to play as the Local against a model, then 'human' should be the second model name, as the Local is Player 2. The -i flag has to be used along with the specific instances file name. Change the file name under the -i flag for other languages/modes/experiments. Finally, use the -l flag usually set to 300, to allow the models for more token generation. This flag is automatically set to 100. 
+The following commands show a set of possibilities to run the game with different model players:
 
-Note that, `clem` does now automatically discovers game directories that are at most 3-levels away from the `cwd`. 
-To be discoverable, directories have to carry a `clemgame.json` (here a game path is not required, because `clem` automatically determines it).
+```shell
+clem run -g WordTraveler -m grok-3 -i instances_en.json -l 300
 
-## Use Case: Game Developer
+clem run -g WordTraveler -m mock -i instances_el.json -l 300
 
-As a game developer you want to implement your own game to be run with `clem`.
-You will use a typical clem game project structure.
-The game directory will become your workspace.
-To make the game visible to `clem` you need to add a `clemgame.json` to the directory.
-This file should specify at least the following
-```
-{
-"game_name": "mygame",
-"description": "A brief description of mygame",
-"player": "single" | "two" | "multi",
-"image": "none" | "single" | "multi",
-"languages": ["en"]
-}
+clem run -g WordTraveler -m gemma-3-27b human -i instances_en.json -l 300
+
+clem run WordTraveler -m human deepseek-v3 -i instances_es.json -l 300 
 ```
 
-To test your game with some packaged models, you will add a `key.json` and run the command `clem run -g mygame -m model` from within the game directory.
-The results will be written into `results`.
-To also get html transcripts you can run `clem transcribe -g mygame`.
-Overall, a game developers workspace directory will possibly look as follows:
+## Transcribing
 
+To transcribe the model interactions into transcripts in htlm and tex (the flag -g is optional):
+
+```shell
+clem transcribe -g WordTraveler
 ```
-mygame
-- in/
-- resources/
-- results/
-- __init__.py
-- master.py
-- instancegenerator.py
-- clemgame.json   
-```
+## Scoring
 
-## Use Case: Running Games
+To score previous runs (the flag -g is optional):
 
-We include an example game `taboo` under `clembench` directory (the game includes `clemgame.json` file and `clem` can detect it as a game.
-
-### List games
-Let's check the available games in the current directory:
-
-
-```
-(myclem) clem list games
-```
-We get this output:
-
-<pre>
-Found '1' game specs that match the game_selector='all'
-
-taboo:
-	Taboo game between two agents where one has to describe a word for the other to guess.
-</pre>
-
-### List models
-Let's check which models (LLMs) are supported:
-
-```
-(myclem) clem list models
+```bash
+clem score -g WordTraveler
 ```
 
-We get this output:
+**Metrics:**
 
-<pre>
-Found '180' registered model specs:
-...
-gpt-4o-2024-08-06 -> openai (packaged)
-gpt-4o-mini-2024-07-18 -> openai (packaged)
-...
-o1-mini-2024-09-12 -> openai (packaged)
-o3-mini-2025-01-31 -> openai (packaged)
-...
-claude-3-5-haiku-20241022 -> anthropic (packaged)
-claude-3-5-sonnet-20241022 -> anthropic (packaged)
-claude-3-7-sonnet-20250219 -> anthropic (packaged)
-...
-gemini-2.0-flash-exp -> google (packaged)
-...
-Meta-Llama-3.1-8B-Instruct -> huggingface_local (packaged)
-Meta-Llama-3.1-70B-Instruct -> huggingface_local (packaged)
-...
-InternVL2-40B -> huggingface_multimodal (packaged)
-InternVL2-26B -> huggingface_multimodal (packaged)
-...
-</pre>
+- **Quality** - Number of correct guesses
+- **Speed** - `100 / t` where _t_ is the turn of the first correct answer (0 if unsuccessful/aborted)
+- **Outcome** - Success, Loss, or Aborted
+- **Word rank** - Uses a transformer to produce a cosine similarity score between a location and the available adjectives the players has at their disposal, which are later ranked. 1 indicates the highest similarity possible.
 
-### Running and benchmarking
-
-Let's run the existing `taboo` game using `gpt-4o-2024-08-06`. To run such commercial model from OpenAI, it is required to have `key.json` file with the API and organization keys filled:
-
+## Evaluation
+To create evaluation boards(the flag -g is optional):
 ```
-(myclem) clem run -g taboo -m gpt-4o-2024-08-06       # runs all experiments
+clem eval -g WordTraveler
 ```
-
-The results will be written into `results` folder. It also creates a log file (clembench.log) for all episodes that were run. 
-
-
-Then run the following script that generates the transcript for each game play (episode), it generates `transcript.html` and `transcript.tex` files under each episode directory:
-
-```
-(myclem) clem transcribe               # translates interactions into html files for all games that are accessible.
-```
-
-Finally, run `benchmark eval`:
-
-```
-(myclem) clem eval                     # computes overall performances measures
-```
-
-It generates `results.html`, `results.csv` and `raw.csv` files inside the `results` directory. `results.html` or `results.csv` compares all models that were run. `raw.csv` is the dump of all averaged scores (episode and turn) that can be used for further analysis.
-
-**Benchmarking script**: We also provided a script to benchmark any implemented game with multiple models. See `run_benchmark.sh` and adjust the script where needed.
-
-
-
-#### More options
-
-To see more options for running a game, execute the following script:
-
-```
-(myclem) clem run -h       # help
-```
-
-We get the following output:
-<pre>
-options:
-  -h, --help            show this help message and exit
-  -m [MODELS ...], --models [MODELS ...]
-                        Assumes model names supported by the implemented backends.
-                        
-                              To run a specific game with a single player:
-                              $> clem run run -g privateshared -m mock
-                        
-                              To run a specific game with a two players:
-                              $> clem run -g taboo -m mock mock
-                        
-                              If the game supports model expansion (using the single specified model for all players):
-                              $> clem run -g taboo -m mock
-                        
-                              When this option is not given, then the dialogue partners configured in the experiment are used. 
-                              Default: None.
-
-  -e EXPERIMENT_NAME, --experiment_name EXPERIMENT_NAME
-                        Optional argument to only run a specific experiment
-
-  -g GAME, --game GAME  A specific game name (see ls), or a GameSpec-like JSON string object.
-
-  -t TEMPERATURE, --temperature TEMPERATURE
-                        Argument to specify sampling temperature for the models. Default: 0.0.
-
-  -l MAX_TOKENS, --max_tokens MAX_TOKENS
-                        Specify the maximum number of tokens to be generated per turn (except for cohere). Be careful with high values which might lead to exceed your API token limits. Default: 100.
-
-  -i INSTANCES_NAME, --instances_name INSTANCES_NAME
-                        The instances file name (.json suffix will be added automatically.
-
-  -r RESULTS_DIR, --results_dir RESULTS_DIR
-                        A relative or absolute path to the results root directory. For example '-r results/v1.5/de‘ or '-r /absolute/path/for/results'. When not specified, then the results will be located in 'results
-
-</pre>
-
-For instance, we can run one specific experiment `high_en` in `taboo` like this:
-
- ```
-(myclem) clem run -g taboo -e high_en -m gpt-4o-2024-08-06       # runs only "high_en" experiment
-```
-
-Since `taboo` is a two player game (one player gives clues and the other player guesses the word), we can make two different models play this game, the first one is a clue giver (gpt-4o-2024-08-06) and the second is a guesser (gpt-4o-mini-2024-07-18):
-
-
- ```
-(myclem) clem run -g taboo -m gpt-4o-2024-08-06 gpt-4o-mini-2024-07-18
-```
-
-Or simply run the mock version of models (produces some static output) just to test the setup.
-
-```
-(myclem) clem run -g taboo -m mock
-```
-
-
-##### Multiple instance files
-
-By default, the `clem run -g game -m model` runs the `instances.json` file under `game_dir/in/instances.json`. You can run different instance files with the `-i instances_of_your_choice` (.json is added automatically). 
-
-Let's say you want to benchmark certain models on your multilingual abilities and your game supports those languages (German, English, etc.). Then, you can include a separate instance file for each language and encapsulates all needed information for that language under `game_dir/in` directory as such: `instances_de.json` and `instances_en.json`
-
-
-```
-(myclem) clem run -g GAME_NAME -m MODEL_NAME -i instances_de -r results_de       # runs specific instance file and saves the results under specific folder
-```
-and
-
-```
-(myclem) clem run -g GAME_NAME -m MODEL_NAME -i instances_en -r results_en
-```
-Doing it this way, the results are saved in separate folders (if that is what you wish, otherwise remove -r option).
-
-Running `eval` script by default looks for `results` folder. If you specified different results folder, simply run with the -r option:
-
-```
-(myclem) clem transcribe -r results_en
-(myclem) clem transcribe -r results_de
-
-(myclem) clem eval -r results_en
-(myclem) clem eval -r results_de
-```
-
-
-
-## Running Local Models
-
-### GPU
-The framework already supports multiple models that are hosted on HuggingFace (check with `clem list models`).
-
-To run any supported model (e.g. `Meta-Llama-3.1-8B-Instruct`), simply run the following script:
-
-```
-(myclem) clem run -g taboo -m Meta-Llama-3.1-8B-Instruct
-```
-
-It will start downloading the model weights from HF, once downloaded the game will be played. GPUs are required to run such models.
-
-
-### LlamaCPP
-
-### VLLM
-
-### OpenAI Compatible Server
-
-If you have a local model hosted on your computer (Ollama, etc.) and it is possible to query it via API, then simply add your API details (base URL and API key if required) to the `key.json` file under `generic_openai_compatible` field:
-
-Let's say the model is accessbile with these parameters:
-
-```
-"generic_openai_compatible": {"api_key":"0123456", "base_url": "http://localhost:8080/query"}
-```
-
-Then add the model details to the `model_registry.json` file. We provided an example (my_model) in the template file (model_registry.json.template).
-
-To run the model, as usual:
-
-```
-(myclem) clem run -g taboo -m my_model
-```
-
-Similarly, if you have access to other OpenAI compatible models, simply add the base URL and your key as above and you can send the queries to that server/model.
-
